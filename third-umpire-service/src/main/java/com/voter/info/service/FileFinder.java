@@ -31,7 +31,7 @@ public class FileFinder {
 		String defaultYear = ServiceConstants.DEFAULT_SEARCH_YEAR;
 		String defaultAcNo = ServiceConstants.DEFAULT_SEARCH_AC_NO;
 		String defaultPartNo = ServiceConstants.DEFAULT_SEARCH_PART_NO;
-		findPDF(defaultYear, defaultAcNo, defaultPartNo);
+		findPDFUrl(defaultYear, defaultAcNo, defaultPartNo);
 	}
 	
 	/**
@@ -40,7 +40,7 @@ public class FileFinder {
 	 * @param acNo
 	 * @param partNo
 	 */
-	public void findPDF(String year, String acNo, String partNo) {
+	public String findPDFUrl(String year, String acNo, String partNo) {
 		Extractor extractor = new Extractor();
 		Map<String, String> polingDetails = extractor.extractPolingStationDetails(year, acNo);
 		/*
@@ -74,6 +74,7 @@ public class FileFinder {
 		 * TODO: As the required document URL is built, create a
 		 * Reader and parse the PDF file
 		 */
+		return docURLBuilder.toString();
 	}
 	
 	public static void main(String[] args) {
