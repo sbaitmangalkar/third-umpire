@@ -1,5 +1,6 @@
 package com.voter.info.service;
 
+import com.voter.info.model.UserRequest;
 import com.voter.info.model.Voter;
 
 /**
@@ -8,6 +9,5 @@ import com.voter.info.model.Voter;
  *
  */
 public interface VoterService {
-	public abstract Voter findVoter(String name);
-	public abstract Voter findVoter(String name, String polingBooth);
+	public abstract Voter findVoter(UserRequest request);
 }
