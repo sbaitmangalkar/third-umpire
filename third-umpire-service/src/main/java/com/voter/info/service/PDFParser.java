@@ -21,8 +21,8 @@ public class PDFParser {
 	
 	public static void main(String[] args) {
 		PDFParser parser = new PDFParser();
-		//parser.parse("http://ceokarnataka.kar.nic.in/DraftRolls_2016/DraftRolls_2016/English/WOIMG/AC156/AC1560162.pdf");
-		parser.parse("http://ceokarnataka.kar.nic.in/DraftRolls_2018/English/AC156/AC1560180.pdf");
+		parser.parse("http://ceokarnataka.kar.nic.in/DraftRolls_2016/DraftRolls_2016/English/WOIMG/AC156/AC1560162.pdf");
+		//parser.parse("http://ceokarnataka.kar.nic.in/DraftRolls_2018/English/AC156/AC1560180.pdf");
 	}
 	
 }
