@@ -34,6 +34,7 @@
 		<module>third-umpire-service</module>
 		<module>third-umpire-app</module>
     <module>third-umpire-model</module>
+    <module>third-umpire-util</module>
   </modules>
 	<build>
 		<plugins>

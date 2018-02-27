@@ -8,27 +8,16 @@
 		<artifactId>third-umpire</artifactId>
 		<version>1.0-SNAPSHOT</version>
 	</parent>
-	<groupId>com.voter.info.app</groupId>
-	<artifactId>third-umpire-app</artifactId>
+	<groupId>com.voter.info.util</groupId>
+	<artifactId>third-umpire-util</artifactId>
 	<version>1.0</version>
-	<name>third-umpire-app</name>
+	<name>third-umpire-util</name>
 	<url>http://maven.apache.org</url>
 	<dependencies>
-		<!-- https://mvnrepository.com/artifact/junit/junit -->
 		<dependency>
 			<groupId>junit</groupId>
 			<artifactId>junit</artifactId>
 			<scope>test</scope>
-		</dependency>
-		<dependency>
-			<groupId>com.voter.info.service</groupId>
-			<artifactId>third-umpire-service</artifactId>
-			<version>1.0</version>
-		</dependency>
-		<dependency>
-			<groupId>com.voter.info.util</groupId>
-			<artifactId>third-umpire-util</artifactId>
-			<version>1.0</version>
 		</dependency>
 	</dependencies>
 
