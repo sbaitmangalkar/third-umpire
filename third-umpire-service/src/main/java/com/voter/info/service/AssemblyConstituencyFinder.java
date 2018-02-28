@@ -43,6 +43,7 @@ public class AssemblyConstituencyFinder {
 		
 		try {
 			String districtURL = DistrictFinder.getURLForDistrict(districtName);
+			
 			HtmlPage assemblyConstPage = client.getPage(districtURL);
 			List<HtmlAnchor> allPageAnchors = assemblyConstPage.getAnchors();
 			Map<String, String> asseblyConstituencyDetails = allPageAnchors.stream()
@@ -64,7 +65,11 @@ public class AssemblyConstituencyFinder {
 	 * @return
 	 */
 	public static String getURLForAssemblyConstituency(String districtName, String assemblyConstituencyName) {
-		return findAllAssemblyConstituencies(districtName).get(assemblyConstituencyName);
+		Map<String, String> assemblyConstituencyURLs = findAllAssemblyConstituencies(districtName);
+		if(assemblyConstituencyURLs.containsKey(assemblyConstituencyName))
+			return assemblyConstituencyURLs.get(assemblyConstituencyName);
+		else
+			return null;
 	}
 	
 	/**
