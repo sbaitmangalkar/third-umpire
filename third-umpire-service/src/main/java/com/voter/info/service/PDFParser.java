@@ -63,9 +63,9 @@ public class PDFParser {
 			text = text.replaceAll("(?m)^[ \\t]*\\r?\\n", "");
 					
 			System.out.println(text);
-			String[] entries = text.split("\\n");
+			/*String[] entries = text.split("\\n");
 			Stream.of(entries)
-			      .forEach(System.out::println);
+			      .forEach(System.out::println);*/
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
