@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>com.voter.info</groupId>
 	<artifactId>third-umpire</artifactId>
@@ -28,14 +29,20 @@
 				<artifactId>htmlunit</artifactId>
 				<version>2.13</version>
 			</dependency>
+			<!-- https://mvnrepository.com/artifact/org.apache.commons/commons-lang3 -->
+			<dependency>
+				<groupId>org.apache.commons</groupId>
+				<artifactId>commons-lang3</artifactId>
+				<version>3.0</version>
+			</dependency>
 		</dependencies>
 	</dependencyManagement>
 	<modules>
 		<module>third-umpire-service</module>
 		<module>third-umpire-app</module>
-    <module>third-umpire-model</module>
-    <module>third-umpire-util</module>
-  </modules>
+		<module>third-umpire-model</module>
+		<module>third-umpire-util</module>
+	</modules>
 	<build>
 		<plugins>
 			<plugin>
