@@ -66,11 +66,12 @@ public class PDFParser {
 					
 			//System.out.println(text);
 			String[] entries = text.split("Name :");
-			searchResult = Stream.of(entries)
-			                     .filter(e -> e.contains(lastName))
-			                     .filter(e -> e.contains(firstName))
-			                     .findFirst()
-			                     .get();
+			//TODO: Replace forEach with required method
+			/*searchResult =*/ Stream.of(entries)
+			                         .filter(e -> e.contains(lastName))
+			                         .filter(e -> e.contains(firstName))
+			                         .forEach(System.out::println);
+			                     
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -89,11 +90,9 @@ public class PDFParser {
 			PdfReaderContentParser parser = new PdfReaderContentParser(reader);
 			TextExtractionStrategy strategy = parser.processContent(pageNumber, new SimpleTextExtractionStrategy());
 			
-			//String textFromPage = PdfTextExtractor.getTextFromPage(reader, pageNumber);
 			String textFromPage = strategy.getResultantText();
 			return textFromPage;
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		return null;
