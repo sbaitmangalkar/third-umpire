@@ -10,7 +10,9 @@ import org.apache.commons.lang3.StringUtils;
 
 import com.itextpdf.text.pdf.PdfReader;
 import com.itextpdf.text.pdf.RandomAccessFileOrArray;
-import com.itextpdf.text.pdf.parser.PdfTextExtractor;
+import com.itextpdf.text.pdf.parser.PdfReaderContentParser;
+import com.itextpdf.text.pdf.parser.SimpleTextExtractionStrategy;
+import com.itextpdf.text.pdf.parser.TextExtractionStrategy;
 import com.voter.info.util.MemoryManager;
 
 /**
@@ -44,32 +46,35 @@ public class PDFParser {
 	 * @param fileURL
 	 * @param firstName
 	 */
-	public void partialParse(String fileURL, String firstName) {
+	public String partialParse(String fileURL, String firstName, String lastName) {
+		String searchResult = null;
 		try {
 			
 			PdfReader reader = new PdfReader(new RandomAccessFileOrArray(new URL(fileURL).openStream()), null);
 			int totalPages = reader.getNumberOfPages();
-			//System.out.println(totalPages);
+			
 			String text = IntStream.range(1, totalPages)
 			                       .mapToObj(pageNumber -> extractTextFromPDFPage(reader, pageNumber))
 			                       .filter(pageText -> StringUtils.contains(pageText, firstName))
 			                       .collect(Collectors.joining());
 			text = text.replaceAll("[ ]{2,}", " ");
 			text = text.replaceAll("Name:", "");
-			text = text.replaceAll("Name :", "");
 			text = text.replaceAll("Photo", "");
 			text = text.replaceAll("Not \\n", "");
 			text = text.replaceAll("Available", "");
 			text = text.replaceAll("(?m)^[ \\t]*\\r?\\n", "");
 					
-			System.out.println(text);
-			/*String[] entries = text.split("\\n");
-			Stream.of(entries)
-			      .forEach(System.out::println);*/
+			//System.out.println(text);
+			String[] entries = text.split("Name :");
+			searchResult = Stream.of(entries)
+			                     .filter(e -> e.contains(lastName))
+			                     .filter(e -> e.contains(firstName))
+			                     .findFirst()
+			                     .get();
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		return searchResult;
 	}
 
 	/**
@@ -80,14 +85,12 @@ public class PDFParser {
 	 */
 	private String extractTextFromPDFPage(PdfReader reader, int pageNumber) {
 		
-		//Rectangle2D rect2 = new Rectangle2D.Double(0, 840, 595, 840);
-		//RenderFilter renderFilter = new RegionTextRenderFilter(rect2);
 		try {
-			/*
-			 * Custom text extraction strategy
-			 */
-			//TextExtractionStrategy strategy = new FilteredTextRenderListener(new LocationTextExtractionStrategy(), renderFilter);
-			String textFromPage = PdfTextExtractor.getTextFromPage(reader, pageNumber);
+			PdfReaderContentParser parser = new PdfReaderContentParser(reader);
+			TextExtractionStrategy strategy = parser.processContent(pageNumber, new SimpleTextExtractionStrategy());
+			
+			//String textFromPage = PdfTextExtractor.getTextFromPage(reader, pageNumber);
+			String textFromPage = strategy.getResultantText();
 			return textFromPage;
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
@@ -101,9 +104,10 @@ public class PDFParser {
 		String name = "";
 		/*parser.fullParse(
 				"http://ceokarnataka.kar.nic.in/DraftRolls_2016/DraftRolls_2016/English/WOIMG/AC156/AC1560162.pdf");*/
-		
+		String firstName = name.split("\\s")[0];
+		String lastName = name.split("\\s")[1];
 		parser.partialParse(
-				"http://ceokarnataka.kar.nic.in/DraftRolls_2016/DraftRolls_2016/English/WOIMG/AC156/AC1560162.pdf", name);
+				"http://ceokarnataka.kar.nic.in/DraftRolls_2016/DraftRolls_2016/English/WOIMG/AC156/AC1560162.pdf", firstName, lastName);
 		
 	}
 
