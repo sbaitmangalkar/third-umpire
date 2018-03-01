@@ -83,6 +83,6 @@ public class AssemblyConstituencyFinder {
 	}
 	
 	public static void main(String[] args) {
-		findAllAssemblyConstituencies("http://ceokarnataka.kar.nic.in/DraftRolls_2016/AC_List_B3.aspx?DistNo=32");
+		findAllAssemblyConstituencies("B.B.M.P(NORTH)");
 	}
 }
