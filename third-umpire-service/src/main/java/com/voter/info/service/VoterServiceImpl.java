@@ -1,5 +1,8 @@
 package com.voter.info.service;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 import com.voter.info.model.UserRequest;
 import com.voter.info.model.Voter;
 
@@ -13,7 +16,10 @@ public class VoterServiceImpl implements VoterService {
 	@Override
 	public Voter findVoter(UserRequest request) {
 		Voter voter = null;
-		String name = request.getName();
+		String firstName = request.getFirstName();
+		String middleName = request.getMiddleName();
+		String lastName = request.getLastName();
+		
 		String districtName = request.getDistrict();
 		String assemblyConstituencyName = request.getAssemblyConstituencyName();
 		if(districtName == null || districtName.equals("")) {
@@ -22,11 +28,29 @@ public class VoterServiceImpl implements VoterService {
 		
 		
 		if(assemblyConstituencyName != null && !assemblyConstituencyName.equals("")) {
-			voter = PersonFinder.findPerson(name, districtName, assemblyConstituencyName);
+			voter = PersonFinder.findPerson(firstName, middleName, lastName, districtName, assemblyConstituencyName);
 		} else {
-			voter = PersonFinder.findPerson(name, districtName);
+			voter = PersonFinder.findPerson(firstName, middleName, lastName, districtName);
 		}
 		return voter;
+	}
+
+	@Override
+	public List<String> getAllAssemblyConstituencies(String districtName) {
+		return AssemblyConstituencyFinder.findAllAssemblyConstituencies(districtName)
+		                                 .entrySet()
+		                                 .stream()
+		                                 .map(e -> e.getKey())
+		                                 .collect(Collectors.toList());
+	}
+
+	@Override
+	public List<String> getAllDistricts() {
+		return DistrictFinder.findAllDistricts()
+		                     .entrySet()
+		                     .stream()
+		                     .map(e -> e.getKey())
+		                     .collect(Collectors.toList());
 	}
 	
 }
