@@ -80,21 +80,10 @@ public class DistrictFinder {
 	
 	public static String getURLForDistrict(String districtName) {
 		Map<String, String> karnatakaDistrictURLs = findAllDistricts();
-		if(districtName.equalsIgnoreCase("Bangalore")) {
-			StringBuilder url = new  StringBuilder();
-			url.append(karnatakaDistrictURLs.get("B.B.M.P(NORTH)"));
-			url.append("|");
-			url.append(karnatakaDistrictURLs.get("B.B.M.P(CENTRAL)"));
-			url.append("|");
-			url.append(karnatakaDistrictURLs.get("B.B.M.P(SOUTH)"));
-			url.append("|");
-			url.append(karnatakaDistrictURLs.get("BANGALORE URBAN"));
-			
-			return url.toString();
-			
-		} else {
+		if(karnatakaDistrictURLs.containsKey(districtName))
 			return karnatakaDistrictURLs.get(districtName.toUpperCase());
-		}
+		else
+			return null;
 	}
 	
 	/**
