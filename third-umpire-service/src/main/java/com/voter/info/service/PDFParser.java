@@ -13,6 +13,7 @@ import com.itextpdf.text.pdf.RandomAccessFileOrArray;
 import com.itextpdf.text.pdf.parser.PdfReaderContentParser;
 import com.itextpdf.text.pdf.parser.SimpleTextExtractionStrategy;
 import com.itextpdf.text.pdf.parser.TextExtractionStrategy;
+import com.voter.info.model.SearchResult;
 import com.voter.info.util.MemoryManager;
 
 /**
@@ -21,17 +22,18 @@ import com.voter.info.util.MemoryManager;
  *
  */
 public class PDFParser {
-	public void fullParse(String fileURL, String firstName) {
+	@SuppressWarnings("unused")
+	private static void fullParse(String fileURL, String firstName) {
 		try {
 			long before = MemoryManager.getMemoryUse();
 			PdfReader reader = new PdfReader(new URL(fileURL).openStream());
 			int totalPages = reader.getNumberOfPages();
-			//System.out.println(totalPages);
+			// System.out.println(totalPages);
 			String text = IntStream.range(1, totalPages)
-			                       .mapToObj(pageNumber -> extractTextFromPDFPage(reader, pageNumber))
-			                       .filter(pageText -> pageText.contains(firstName))
-			                       .collect(Collectors.joining());
-			
+					               .mapToObj(pageNumber -> extractTextFromPDFPage(reader, pageNumber))
+					               .filter(pageText -> pageText.contains(firstName))
+					               .collect(Collectors.joining());
+
 			System.out.println(text);
 			System.out.println("==========================");
 			System.out.println("Memory used by full Parser: " + (MemoryManager.getMemoryUse() - before));
@@ -40,38 +42,48 @@ public class PDFParser {
 			e.printStackTrace();
 		}
 	}
-	
+
 	/**
 	 * 
 	 * @param fileURL
 	 * @param firstName
 	 */
-	public String partialParse(String fileURL, String firstName, String lastName) {
-		String searchResult = null;
+	public static SearchResult partialParse(String fileURL, String firstName, String lastName) {
+		SearchResult searchResult = new SearchResult();
 		try {
-			
+
 			PdfReader reader = new PdfReader(new RandomAccessFileOrArray(new URL(fileURL).openStream()), null);
 			int totalPages = reader.getNumberOfPages();
-			
+
 			String text = IntStream.range(1, totalPages)
-			                       .mapToObj(pageNumber -> extractTextFromPDFPage(reader, pageNumber))
-			                       .filter(pageText -> StringUtils.contains(pageText, firstName))
-			                       .collect(Collectors.joining());
-			text = text.replaceAll("[ ]{2,}", " ");
-			text = text.replaceAll("Name:", "");
-			text = text.replaceAll("Photo", "");
-			text = text.replaceAll("Not \\n", "");
-			text = text.replaceAll("Available", "");
-			text = text.replaceAll("(?m)^[ \\t]*\\r?\\n", "");
-					
-			//System.out.println(text);
+					               .mapToObj(pageNumber -> extractTextFromPDFPage(reader, pageNumber))
+					               .filter(pageText -> StringUtils.contains(pageText, firstName))
+					               .collect(Collectors.joining());
+			String probableAddress = text.split("\\n")[0];
+
+			
+			 /*text = text.replaceAll("[ ]{2,}", " "); text = text.replaceAll("Name:", "");
+			 text = text.replaceAll("Photo", ""); text = text.replaceAll("Not \\n", "");
+			 text = text.replaceAll("Available", ""); text =
+			 text.replaceAll("(?m)^[ \\t]*\\r?\\n", "");*/
+			 
+
+			// System.out.println(text);
 			String[] entries = text.split("Name :");
-			//TODO: Replace forEach with required method
-			/*searchResult =*/ Stream.of(entries)
-			                         .filter(e -> e.contains(lastName))
-			                         .filter(e -> e.contains(firstName))
-			                         .forEach(System.out::println);
-			                     
+
+			String result = Stream.of(entries)
+					              .filter(e -> e.contains(lastName))
+					              .filter(e -> e.contains(firstName))
+					              .map(e -> e.trim())
+					              .collect(Collectors.joining("|"));
+			if (probableAddress.contains(")"))
+				probableAddress = probableAddress.substring(probableAddress.indexOf(")") + 1, probableAddress.length());
+			if (probableAddress.contains("Continued"))
+				probableAddress = StringUtils.replace(probableAddress, "Continued", "").trim();
+
+			searchResult.setResult(result);
+			searchResult.setProbableAddress(probableAddress);
+
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -84,12 +96,12 @@ public class PDFParser {
 	 * @param pageNumber
 	 * @return
 	 */
-	private String extractTextFromPDFPage(PdfReader reader, int pageNumber) {
-		
+	private static String extractTextFromPDFPage(PdfReader reader, int pageNumber) {
+
 		try {
 			PdfReaderContentParser parser = new PdfReaderContentParser(reader);
 			TextExtractionStrategy strategy = parser.processContent(pageNumber, new SimpleTextExtractionStrategy());
-			
+
 			String textFromPage = strategy.getResultantText();
 			return textFromPage;
 		} catch (IOException e) {
@@ -99,15 +111,15 @@ public class PDFParser {
 	}
 
 	public static void main(String[] args) {
-		PDFParser parser = new PDFParser();
 		String name = "";
-		/*parser.fullParse(
-				"http://ceokarnataka.kar.nic.in/DraftRolls_2016/DraftRolls_2016/English/WOIMG/AC156/AC1560162.pdf");*/
+		
 		String firstName = name.split("\\s")[0];
 		String lastName = name.split("\\s")[1];
-		parser.partialParse(
-				"http://ceokarnataka.kar.nic.in/DraftRolls_2016/DraftRolls_2016/English/WOIMG/AC156/AC1560162.pdf", firstName, lastName);
-		
+		SearchResult res = partialParse(
+				"http://ceokarnataka.kar.nic.in/DraftRolls_2016/DraftRolls_2016/English/WOIMG/AC156/AC1560162.pdf",
+				firstName, lastName);
+		System.out.println(res);
+
 	}
 
 }

@@ -1,5 +1,7 @@
 package com.voter.info.service;
 
+import java.util.List;
+
 import com.voter.info.model.UserRequest;
 import com.voter.info.model.Voter;
 
@@ -10,4 +12,6 @@ import com.voter.info.model.Voter;
  */
 public interface VoterService {
 	public abstract Voter findVoter(UserRequest request);
+	public abstract List<String> getAllDistricts();
+	public abstract List<String> getAllAssemblyConstituencies(String districtName);
 }
