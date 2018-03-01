@@ -40,7 +40,7 @@ public class PollingStationFinder {
 			                                              .filter(eachAnchor -> eachAnchor.getHrefAttribute().contains("English"))
 			                                              .map(eachAnchor -> draftRollURL + "/" + eachAnchor.getHrefAttribute())
 			                                              .collect(Collectors.toList());
-			pollingBoothURLs.forEach(System.out::println);
+			//pollingBoothURLs.forEach(System.out::println);
 			
 			return pollingBoothURLs;
 		} catch (FailingHttpStatusCodeException | IOException e) {
