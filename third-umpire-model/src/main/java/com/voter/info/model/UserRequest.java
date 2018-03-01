@@ -1,16 +1,34 @@
 package com.voter.info.model;
 
 public class UserRequest {
-	private String name;
+	private String firstName;
+	private String middleName;
+	private String lastName;
 	private String district;
 	private String assemblyConstituencyName;
 
-	public String getName() {
-		return name;
+	public String getFirstName() {
+		return firstName;
 	}
 
-	public void setName(String name) {
-		this.name = name;
+	public void setFirstName(String firstName) {
+		this.firstName = firstName;
+	}
+
+	public String getMiddleName() {
+		return middleName;
+	}
+
+	public void setMiddleName(String middleName) {
+		this.middleName = middleName;
+	}
+
+	public String getLastName() {
+		return lastName;
+	}
+
+	public void setLastName(String lastName) {
+		this.lastName = lastName;
 	}
 
 	public String getDistrict() {
@@ -35,7 +53,9 @@ public class UserRequest {
 		int result = 1;
 		result = prime * result + ((assemblyConstituencyName == null) ? 0 : assemblyConstituencyName.hashCode());
 		result = prime * result + ((district == null) ? 0 : district.hashCode());
-		result = prime * result + ((name == null) ? 0 : name.hashCode());
+		result = prime * result + ((firstName == null) ? 0 : firstName.hashCode());
+		result = prime * result + ((lastName == null) ? 0 : lastName.hashCode());
+		result = prime * result + ((middleName == null) ? 0 : middleName.hashCode());
 		return result;
 	}
 
@@ -58,18 +78,22 @@ public class UserRequest {
 				return false;
 		} else if (!district.equals(other.district))
 			return false;
-		if (name == null) {
-			if (other.name != null)
+		if (firstName == null) {
+			if (other.firstName != null)
 				return false;
-		} else if (!name.equals(other.name))
+		} else if (!firstName.equals(other.firstName))
+			return false;
+		if (lastName == null) {
+			if (other.lastName != null)
+				return false;
+		} else if (!lastName.equals(other.lastName))
+			return false;
+		if (middleName == null) {
+			if (other.middleName != null)
+				return false;
+		} else if (!middleName.equals(other.middleName))
 			return false;
 		return true;
-	}
-
-	@Override
-	public String toString() {
-		return "UserRequest[name=" + name + "," + "district=" + district + "," + "assemblyConstituencyName="
-				+ assemblyConstituencyName + "]";
 	}
 
 }
