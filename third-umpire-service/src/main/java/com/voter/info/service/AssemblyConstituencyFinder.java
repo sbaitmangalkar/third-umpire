@@ -39,7 +39,8 @@ public class AssemblyConstituencyFinder {
 		client.getOptions().setCssEnabled(false);
 		client.getOptions().setJavaScriptEnabled(true);
 		client.waitForBackgroundJavaScript(1000);
-		String draftRollURL = getProperties().getProperty("DRAFT_ROLL_URL").replace("%d", ServiceConstants.HISTORY_SEARCH_YEAR);
+		//String draftRollURL = getProperties().getProperty("DRAFT_ROLL_URL").replace("%d", ServiceConstants.HISTORY_SEARCH_YEAR);
+		String draftRollURL = getProperties().getProperty("FINAL_ROLL_URL").replace("%d", ServiceConstants.RECENT_SEARCH_YEAR);
 		
 		try {
 			String districtURL = DistrictFinder.getURLForDistrict(districtName);
@@ -80,9 +81,5 @@ public class AssemblyConstituencyFinder {
 	private static String formatAssemblyConstituencyName(String assemblyConstName) {
 		assemblyConstName = assemblyConstName.substring(assemblyConstName.indexOf("/") + 2, assemblyConstName.length());
 		return assemblyConstName;
-	}
-	
-	public static void main(String[] args) {
-		findAllAssemblyConstituencies("B.B.M.P(NORTH)");
 	}
 }
