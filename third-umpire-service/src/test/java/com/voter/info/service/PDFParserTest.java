@@ -1,5 +1,5 @@
 package com.voter.info.service;
 
-public class ExtractorTest {
+public class PDFParserTest {
 
 }
