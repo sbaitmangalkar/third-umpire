@@ -2,10 +2,10 @@ package com.voter.info.model;
 
 public class Voter {
 	private String fullName;
-	private String spouseName;
-	private String parentName;
+	private String dependent;
+	private String dependentName;
 	private String address;
-	private double age;
+	private int age;
 	private String sex;
 
 	public String getFullName() {
@@ -16,20 +16,20 @@ public class Voter {
 		this.fullName = fullName;
 	}
 
-	public String getSpouseName() {
-		return spouseName;
+	public String getDependent() {
+		return dependent;
 	}
 
-	public void setSpouseName(String spouseName) {
-		this.spouseName = spouseName;
+	public void setDependent(String dependent) {
+		this.dependent = dependent;
 	}
 
-	public String getParentName() {
-		return parentName;
+	public String getDependentName() {
+		return dependentName;
 	}
 
-	public void setParentName(String parentName) {
-		this.parentName = parentName;
+	public void setDependentName(String dependentName) {
+		this.dependentName = dependentName;
 	}
 
 	public String getAddress() {
@@ -44,7 +44,7 @@ public class Voter {
 		return age;
 	}
 
-	public void setAge(double age) {
+	public void setAge(int age) {
 		this.age = age;
 	}
 
@@ -64,10 +64,10 @@ public class Voter {
 		long temp;
 		temp = Double.doubleToLongBits(age);
 		result = prime * result + (int) (temp ^ (temp >>> 32));
+		result = prime * result + ((dependent == null) ? 0 : dependent.hashCode());
+		result = prime * result + ((dependentName == null) ? 0 : dependentName.hashCode());
 		result = prime * result + ((fullName == null) ? 0 : fullName.hashCode());
-		result = prime * result + ((parentName == null) ? 0 : parentName.hashCode());
 		result = prime * result + ((sex == null) ? 0 : sex.hashCode());
-		result = prime * result + ((spouseName == null) ? 0 : spouseName.hashCode());
 		return result;
 	}
 
@@ -87,29 +87,33 @@ public class Voter {
 			return false;
 		if (Double.doubleToLongBits(age) != Double.doubleToLongBits(other.age))
 			return false;
+		if (dependent == null) {
+			if (other.dependent != null)
+				return false;
+		} else if (!dependent.equals(other.dependent))
+			return false;
+		if (dependentName == null) {
+			if (other.dependentName != null)
+				return false;
+		} else if (!dependentName.equals(other.dependentName))
+			return false;
 		if (fullName == null) {
 			if (other.fullName != null)
 				return false;
 		} else if (!fullName.equals(other.fullName))
-			return false;
-		if (parentName == null) {
-			if (other.parentName != null)
-				return false;
-		} else if (!parentName.equals(other.parentName))
 			return false;
 		if (sex == null) {
 			if (other.sex != null)
 				return false;
 		} else if (!sex.equals(other.sex))
 			return false;
-		if (spouseName == null) {
-			if (other.spouseName != null)
-				return false;
-		} else if (!spouseName.equals(other.spouseName))
-			return false;
 		return true;
 	}
-	
-	//TODO: Override toString() method
 
+	
+	@Override
+	public String toString() {
+		return "Voter[fullName: " + fullName + "; " + "dependent: " + dependent + "; " + "dependentName: " + dependentName
+				+ "; " + "address: " + address + "; " + "age: " + age + "; " + "sex: " + sex + "]";
+	}
 }
