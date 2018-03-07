@@ -11,7 +11,7 @@ import com.voter.info.model.Voter;
  *
  */
 public interface VoterService {
-	public abstract Voter findVoter(UserRequest request);
+	public abstract List<Voter> findVoter(UserRequest request);
 	public abstract List<String> getAllDistricts();
 	public abstract List<String> getAllAssemblyConstituencies(String districtName);
 }
