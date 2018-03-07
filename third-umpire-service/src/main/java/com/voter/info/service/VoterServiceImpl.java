@@ -14,8 +14,8 @@ import com.voter.info.model.Voter;
 public class VoterServiceImpl implements VoterService {
 
 	@Override
-	public Voter findVoter(UserRequest request) {
-		Voter voter = null;
+	public List<Voter> findVoter(UserRequest request) {
+		List<Voter> voters = null;
 		String firstName = request.getFirstName();
 		String middleName = request.getMiddleName();
 		String lastName = request.getLastName();
@@ -28,11 +28,11 @@ public class VoterServiceImpl implements VoterService {
 		
 		
 		if(assemblyConstituencyName != null && !assemblyConstituencyName.equals("")) {
-			voter = PersonFinder.findPerson(firstName, middleName, lastName, districtName, assemblyConstituencyName);
+			voters = PersonFinder.findPerson(firstName, middleName, lastName, districtName, assemblyConstituencyName);
 		} else {
-			voter = PersonFinder.findPerson(firstName, middleName, lastName, districtName);
+			voters = PersonFinder.findPerson(firstName, middleName, lastName, districtName);
 		}
-		return voter;
+		return voters;
 	}
 
 	@Override
