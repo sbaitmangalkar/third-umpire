@@ -20,6 +20,12 @@
 			<artifactId>junit</artifactId>
 			<scope>test</scope>
 		</dependency>
+		<!-- https://mvnrepository.com/artifact/org.wildfly.swarm/javafx -->
+		<dependency>
+			<groupId>org.wildfly.swarm</groupId>
+			<artifactId>javafx</artifactId>
+			<version>2018.3.2</version>
+		</dependency>
 		<dependency>
 			<groupId>com.voter.info.service</groupId>
 			<artifactId>third-umpire-service</artifactId>
