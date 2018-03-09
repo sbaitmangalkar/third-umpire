@@ -48,7 +48,7 @@ public class AssemblyConstituencyFinder {
 			HtmlPage assemblyConstPage = client.getPage(districtURL);
 			List<HtmlAnchor> allPageAnchors = assemblyConstPage.getAnchors();
 			Map<String, String> asseblyConstituencyDetails = allPageAnchors.stream()
-			                                                               .filter(anchor -> anchor.asText().contains("/"))
+			                                                               .filter(anchor -> !anchor.asText().equals("Home"))
 			                                                               .collect(Collectors.toMap(anchor -> formatAssemblyConstituencyName(anchor.asText()), 
 			                                                            		   anchor -> draftRollURL + "/" + anchor.getHrefAttribute()));
 			return asseblyConstituencyDetails;
@@ -79,7 +79,11 @@ public class AssemblyConstituencyFinder {
 	 * @return
 	 */
 	private static String formatAssemblyConstituencyName(String assemblyConstName) {
-		assemblyConstName = assemblyConstName.substring(assemblyConstName.indexOf("/") + 2, assemblyConstName.length());
+		assemblyConstName = assemblyConstName.replaceAll("[^\\p{ASCII}]", "|").trim();
+		if(assemblyConstName.contains("/"))
+			assemblyConstName = assemblyConstName.substring(assemblyConstName.indexOf("/") + 2, assemblyConstName.length());
+		else
+			assemblyConstName = assemblyConstName.substring(assemblyConstName.lastIndexOf("|") + 2, assemblyConstName.length());
 		return assemblyConstName;
 	}
 }
