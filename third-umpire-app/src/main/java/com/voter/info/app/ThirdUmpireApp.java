@@ -1,6 +1,7 @@
 package com.voter.info.app;
 
 import java.net.ConnectException;
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -39,21 +40,8 @@ public class ThirdUmpireApp extends Application {
 	public void start(Stage primaryStage) throws Exception {
 		primaryStage.setTitle("Third Umpire");
 		GridPane grid = new GridPane();
-		/*try {
-			initialize();
-		} catch(Exception e) {
-			grid.add(new Label("Oops!! Remote server is unreachable. Please try after some time."), 0, 0);
-			Button closeButton = new Button("Close");
-			closeButton.setOnAction(value -> System.exit(0));
-			grid.add(closeButton, 0, 1);
-			Scene scene = new Scene(new Group(), 450,250);
-			
-			Group root = (Group)scene.getRoot();
-			root.getChildren().add(grid);
-			
-			primaryStage.setScene(scene);
-			primaryStage.show();
-		}*/
+		initialize();
+		
 		Scene scene = new Scene(new Group(), 450,250);
 		
 		TextField firstNameTextField = new TextField();
@@ -73,12 +61,12 @@ public class ThirdUmpireApp extends Application {
 			String selectedDistrict = (String)districtComboBox.getValue();
 			ComboBox<?> assemblyConstituencyComboBox = null;
 			if(selectedDistrict != null && selectedDistrict.length() > 1) {
-				if(grid.getChildren().contains(assemblyConstituencyComboBox))
-					grid.getChildren().remove(assemblyConstituencyComboBox);
 				ObservableList<String> assemblyConstituencyOptions = FXCollections.observableArrayList(getAllAssemblyConstituencies(selectedDistrict));
+				assemblyConstituencyOptions.add("All");
+				assemblyConstituencyOptions.sort(new AssemblyConstituencySorter());
 				assemblyConstituencyComboBox = new ComboBox<>(assemblyConstituencyOptions);
-				
-				
+				if(grid.getChildren().size() > 9)
+					grid.getChildren().remove(9);
 				grid.add(assemblyConstituencyComboBox, 1, 4);
 			}
 		});
@@ -109,11 +97,19 @@ public class ThirdUmpireApp extends Application {
 	}
 	
 	
-	
+	/**
+	 * 
+	 * @param districtName
+	 * @return
+	 */
 	private List<String> getAllAssemblyConstituencies(String districtName) {
 		return districtsWithAssemblyConstituencies.get(districtName);
 	}
 	
+	/**
+	 * 
+	 * @param args
+	 */
 	public static void main(String[] args) {
 		launch(args);
 	}
