@@ -19,6 +19,8 @@ import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.control.Button;
+import javafx.scene.control.TableView;
+import javafx.scene.control.TableColumn;
 import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
 
@@ -36,13 +38,14 @@ public class ThirdUmpireApp extends Application {
 				                                          .collect(Collectors.toList());            
 	}
 
+	@SuppressWarnings({ "unchecked", "rawtypes" })
 	@Override
 	public void start(Stage primaryStage) throws Exception {
 		primaryStage.setTitle("Third Umpire");
 		GridPane grid = new GridPane();
 		initialize();
-		
-		Scene scene = new Scene(new Group(), 450,250);
+		TableView<?> table = new TableView<>();
+		Scene scene = new Scene(new Group(), 400,550);
 		
 		TextField firstNameTextField = new TextField();
 		firstNameTextField.setPromptText("First Name");
@@ -53,6 +56,9 @@ public class ThirdUmpireApp extends Application {
 		
 		TextField lastNameTextField = new TextField();
 		lastNameTextField.setPromptText("Last Name");
+		
+		Button searchButton = new Button("Search");
+		searchButton.setDisable(true);
 		
 		ObservableList<String> districtOptions = FXCollections.observableArrayList(allDistricts);
 		ComboBox<?> districtComboBox = new ComboBox<>(districtOptions);
@@ -68,6 +74,7 @@ public class ThirdUmpireApp extends Application {
 				if(grid.getChildren().size() > 9)
 					grid.getChildren().remove(9);
 				grid.add(assemblyConstituencyComboBox, 1, 4);
+				searchButton.setDisable(false);
 			}
 		});
 		
@@ -87,6 +94,19 @@ public class ThirdUmpireApp extends Application {
 		grid.add(new Label("Districts:"), 0, 3);
 		grid.add(districtComboBox, 1, 3);
 		grid.add(new Label("Assembly Constituencies:"), 0, 4);
+		
+		grid.add(searchButton, 2, 4);
+		
+		table.setEditable(false);
+		TableColumn fullName = new TableColumn("Full Name");
+		TableColumn dependent = new TableColumn("Dependent");
+		TableColumn dependentName = new TableColumn("Dependent Name");
+		TableColumn address = new TableColumn("Address");
+		TableColumn age = new TableColumn("Age");
+		TableColumn sex = new TableColumn("Sex");
+		
+		table.getColumns().addAll(fullName, dependent, dependentName, address, age, sex);
+		grid.add(table, 1, 7);
 		
 		Group root = (Group)scene.getRoot();
 		root.getChildren().add(grid);
