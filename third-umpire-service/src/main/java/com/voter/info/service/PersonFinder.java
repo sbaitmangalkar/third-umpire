@@ -57,7 +57,7 @@ public class PersonFinder {
 		                                                         .collect(Collectors.toList());
 		List<Voter> voters = processSearchResults(searchResults, firstName, lastName);
 		voters.forEach(System.out::println);
-		return null;
+		return voters;
 	}
 	
 	/**
@@ -85,9 +85,8 @@ public class PersonFinder {
 	 * @return
 	 */
 	private static Voter buildVoter(SearchResult searchResult, String firstName, String lastName) {
-		Voter voter = new Voter();
+		Voter voter = null;
 		String result = searchResult.getResult();
-		//TODO: Create a diversion for multiple occurrences of names.
 		if(result.split("\\|").length > 1)
 			result = filterRequiredVoter(result, firstName, lastName);
 			
@@ -103,11 +102,9 @@ public class PersonFinder {
 		String name = resultPortions[2];
 		String sexAndAge = null;
 		String dependent = null;
-		voter.setFullName(name.trim());
-		voter.setDependentName(dependentName.trim());
 		
 		String address = houseNumber + ", " + probableAddress;
-		voter.setAddress(address);
+		
 		if (resultPortions.length == 9) {
 			//String id = resultPortions[4];
 			sexAndAge = resultPortions[5];
@@ -125,9 +122,9 @@ public class PersonFinder {
 		sexAndAge = sexAndAge.replace("Age:", "|");
 		String sex = sexAndAge.split("\\|")[0].trim();
 		String age = sexAndAge.split("\\|")[1].trim();
-		voter.setSex(sex);
-		voter.setAge(Integer.valueOf(age));
-		voter.setDependent(dependent);
+		age = String.valueOf(Integer.valueOf(age) + 1);
+		
+		voter = new Voter(name, dependent, dependentName, address, age, sex);
 		return voter;
 	}
 	

@@ -48,7 +48,7 @@ public class VoterServiceImpl implements VoterService {
 
 	@Override
 	public List<String> getAllDistricts() {
-		return DistrictFinder.findAllDistricts()
+		return DistrictFinder.getAllDistrictDetails()
 		                     .entrySet()
 		                     .stream()
 		                     .map(e -> e.getKey())
@@ -64,7 +64,7 @@ public class VoterServiceImpl implements VoterService {
 			builder.put(entry.getKey(), getAllAssemblyConstituencies(entry.getKey()));
 		}*/
 		
-		return DistrictFinder.findAllDistricts()
+		return DistrictFinder.getAllDistrictDetails()
 		                     .entrySet()
 		                     .stream()
 		                     .collect(Collectors.toMap(entry -> entry.getKey(), entry -> getAllAssemblyConstituencies(entry.getKey())));
