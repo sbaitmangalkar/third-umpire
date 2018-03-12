@@ -19,6 +19,8 @@ import com.gargoylesoftware.htmlunit.html.HtmlPage;
  *
  */
 public class DistrictFinder {
+	private static Map<String, String> allDistrictDetails;
+	
 	private static Properties getProperties() {
 		Properties properties = new Properties();
 		InputStream inputStream = DistrictFinder.class.getResourceAsStream(ServiceConstants.APP_PROPERTIES);
@@ -50,7 +52,8 @@ public class DistrictFinder {
 			
 			Map<String, String> districtURLs = anchors.stream()
 					                     .filter(anchor -> !anchor.asText().trim().contains("/ BANGALORE"))
-					                     .collect(Collectors.toMap(anchor -> formatDistrictName(anchor.asText()), anchor -> draftRollURL + "/" + anchor.getHrefAttribute()));
+					                     .collect(Collectors.toMap(anchor -> formatDistrictName(anchor.asText()), 
+					                    		 anchor -> draftRollURL + "/" + anchor.getHrefAttribute()));
 			
 			
 			
@@ -62,11 +65,11 @@ public class DistrictFinder {
 			Map<String, String> bangaloreDistrictURLs = getDistrictURLsForBangalore(bangaloreDistrictsAnchor);
 			
 			
-			Map<String, String> karnatakaDistrictURLs = Stream.of(districtURLs, bangaloreDistrictURLs)
-					                                          .flatMap(map -> map.entrySet().stream())
-					                                          .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
+			allDistrictDetails = Stream.of(districtURLs, bangaloreDistrictURLs)
+					                   .flatMap(map -> map.entrySet().stream())
+					                   .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
 			
-			return karnatakaDistrictURLs;
+			return allDistrictDetails;
 			       
 		} catch (FailingHttpStatusCodeException | IOException e) {
 			e.printStackTrace();
@@ -85,11 +88,19 @@ public class DistrictFinder {
 	 * @return
 	 */
 	public static String getURLForDistrict(String districtName) {
-		Map<String, String> karnatakaDistrictURLs = findAllDistricts();
-		if(karnatakaDistrictURLs.containsKey(districtName))
-			return karnatakaDistrictURLs.get(districtName.toUpperCase());
+		if(allDistrictDetails == null)
+			allDistrictDetails = findAllDistricts();
+		
+		if(allDistrictDetails.containsKey(districtName))
+			return allDistrictDetails.get(districtName.toUpperCase());
 		else
 			return null;
+	}
+	
+	public static Map<String, String> getAllDistrictDetails() {
+		if(allDistrictDetails == null)
+			allDistrictDetails = findAllDistricts();
+		return allDistrictDetails;
 	}
 	
 	/**
@@ -149,5 +160,6 @@ public class DistrictFinder {
 	
 	public static void main(String[] args) {
 		System.out.println(findAllDistricts());
+		System.out.println(getURLForDistrict("B.B.M.P(NORTH)"));
 	}
 }

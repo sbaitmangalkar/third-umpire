@@ -35,6 +35,12 @@
 				<artifactId>commons-lang3</artifactId>
 				<version>3.0</version>
 			</dependency>
+			<!-- https://mvnrepository.com/artifact/org.wildfly.swarm/javafx -->
+			<dependency>
+				<groupId>org.wildfly.swarm</groupId>
+				<artifactId>javafx</artifactId>
+				<version>2018.3.2</version>
+			</dependency>
 		</dependencies>
 	</dependencyManagement>
 	<modules>

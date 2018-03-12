@@ -1,59 +1,74 @@
 package com.voter.info.model;
 
+import javafx.beans.property.SimpleStringProperty;
+
 public class Voter {
-	private String fullName;
-	private String dependent;
-	private String dependentName;
-	private String address;
-	private int age;
-	private String sex;
+	private SimpleStringProperty fullName;
+	private SimpleStringProperty dependent;
+	private SimpleStringProperty dependentName;
+	private SimpleStringProperty address;
+	private SimpleStringProperty age;
+	private SimpleStringProperty sex;
+	
+	public Voter() {
+		
+	}
+	
+	public Voter(String fullName, String dependent, String dependentName, String address, String age, String sex) {
+		this.fullName = new SimpleStringProperty(fullName);
+		this.dependent = new SimpleStringProperty(dependent);
+		this.dependentName = new SimpleStringProperty(dependentName);
+		this.address = new SimpleStringProperty(address);
+		this.age = new SimpleStringProperty(age);
+		this.sex = new SimpleStringProperty(sex);
+	}
 
 	public String getFullName() {
-		return fullName;
+		return fullName.get();
 	}
 
 	public void setFullName(String fullName) {
-		this.fullName = fullName;
+		this.fullName.set(fullName);
 	}
 
 	public String getDependent() {
-		return dependent;
+		return dependent.get();
 	}
 
 	public void setDependent(String dependent) {
-		this.dependent = dependent;
+		this.dependent.set(dependent);
 	}
 
 	public String getDependentName() {
-		return dependentName;
+		return dependentName.get();
 	}
 
 	public void setDependentName(String dependentName) {
-		this.dependentName = dependentName;
+		this.dependentName.set(dependentName);
 	}
 
 	public String getAddress() {
-		return address;
+		return address.get();
 	}
 
 	public void setAddress(String address) {
-		this.address = address;
+		this.address.set(address);
 	}
 
-	public double getAge() {
-		return age;
+	public String getAge() {
+		return age.get();
 	}
 
-	public void setAge(int age) {
-		this.age = age;
+	public void setAge(String age) {
+		this.age.set(age);
 	}
 
 	public String getSex() {
-		return sex;
+		return sex.get();
 	}
 
 	public void setSex(String sex) {
-		this.sex = sex;
+		this.sex.set(sex);
 	}
 
 	@Override
@@ -61,9 +76,7 @@ public class Voter {
 		final int prime = 31;
 		int result = 1;
 		result = prime * result + ((address == null) ? 0 : address.hashCode());
-		long temp;
-		temp = Double.doubleToLongBits(age);
-		result = prime * result + (int) (temp ^ (temp >>> 32));
+		result = prime * result + ((age == null) ? 0 : age.hashCode());
 		result = prime * result + ((dependent == null) ? 0 : dependent.hashCode());
 		result = prime * result + ((dependentName == null) ? 0 : dependentName.hashCode());
 		result = prime * result + ((fullName == null) ? 0 : fullName.hashCode());
@@ -85,7 +98,10 @@ public class Voter {
 				return false;
 		} else if (!address.equals(other.address))
 			return false;
-		if (Double.doubleToLongBits(age) != Double.doubleToLongBits(other.age))
+		if (age == null) {
+			if (other.age != null)
+				return false;
+		} else if (!age.equals(other.age))
 			return false;
 		if (dependent == null) {
 			if (other.dependent != null)
@@ -110,10 +126,10 @@ public class Voter {
 		return true;
 	}
 
-	
 	@Override
 	public String toString() {
-		return "Voter[fullName: " + fullName + "; " + "dependent: " + dependent + "; " + "dependentName: " + dependentName
-				+ "; " + "address: " + address + "; " + "age: " + age + "; " + "sex: " + sex + "]";
+		return "Voter[fullName: " + fullName.get() + "; " + "dependent: " + dependent.get() + "; " + "dependentName: "
+				+ dependentName.get() + "; " + "address: " + address.get() + "; " + "age: " + age.get() + "; " + "sex: "
+				+ sex.get() + "]";
 	}
 }

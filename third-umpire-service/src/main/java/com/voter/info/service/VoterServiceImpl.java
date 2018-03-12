@@ -1,6 +1,8 @@
 package com.voter.info.service;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 import com.voter.info.model.UserRequest;
@@ -46,11 +48,27 @@ public class VoterServiceImpl implements VoterService {
 
 	@Override
 	public List<String> getAllDistricts() {
-		return DistrictFinder.findAllDistricts()
+		return DistrictFinder.getAllDistrictDetails()
 		                     .entrySet()
 		                     .stream()
 		                     .map(e -> e.getKey())
 		                     .collect(Collectors.toList());
+	}
+
+	@Override
+	public Map<String, List<String>> getDistrictsWithAssemblyConstituencies() {
+		/*Map<String, List<String>> builder = new HashMap<>();
+		
+		Map<String, String> m = DistrictFinder.findAllDistricts();
+		for(Map.Entry<String, String> entry : m.entrySet()) {
+			builder.put(entry.getKey(), getAllAssemblyConstituencies(entry.getKey()));
+		}*/
+		
+		return DistrictFinder.getAllDistrictDetails()
+		                     .entrySet()
+		                     .stream()
+		                     .collect(Collectors.toMap(entry -> entry.getKey(), entry -> getAllAssemblyConstituencies(entry.getKey())));
+		              
 	}
 	
 }
