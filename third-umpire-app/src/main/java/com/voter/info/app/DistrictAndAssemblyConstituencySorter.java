@@ -7,7 +7,7 @@ import java.util.Comparator;
  * @author Shyam | @sbaitmangalkar| catch.shyambaitmangalkar@gmail.com
  *
  */
-public class AssemblyConstituencySorter implements Comparator<String> {
+public class DistrictAndAssemblyConstituencySorter implements Comparator<String> {
 
 	@Override
 	public int compare(String assemblyConstituency1, String assemblyConstituency2) {
