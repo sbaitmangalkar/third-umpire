@@ -19,6 +19,11 @@
 			<artifactId>junit</artifactId>
 			<scope>test</scope>
 		</dependency>
+		<!-- https://mvnrepository.com/artifact/org.wildfly.swarm/javafx -->
+		<dependency>
+			<groupId>org.wildfly.swarm</groupId>
+			<artifactId>javafx</artifactId>
+		</dependency>
 	</dependencies>
 
 	<build>
