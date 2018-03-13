@@ -10,6 +10,7 @@ import com.voter.info.service.VoterService;
 import com.voter.info.service.VoterServiceImpl;
 
 import javafx.application.Application;
+import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.geometry.Insets;
@@ -18,10 +19,10 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
+import javafx.scene.control.ProgressIndicator;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
-import javafx.scene.control.ProgressIndicator;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
@@ -30,6 +31,21 @@ public class ThirdUmpireApp extends Application {
 	private VoterService voterService;
 	private List<String> allDistricts;
 	private Map<String, List<String>> districtsWithAssemblyConstituencies;
+	
+	private TableView<Voter> table;
+	private TextField firstNameTextField;
+	private TextField middleNameTextField;
+	private TextField lastNameTextField;
+	private ComboBox<String> districtComboBox;
+	private ComboBox<String> assemblyConstituencyComboBox;
+	private ProgressIndicator progressIndicator;
+	
+	private TableColumn<Voter, String> fullName;
+	private TableColumn<Voter, String> dependent;
+	private TableColumn<Voter, String> dependentName;
+	private TableColumn<Voter, String> address;
+	private TableColumn<Voter, Integer> age;
+	private TableColumn<Voter, String> sex;
 	
 	private void initialize() {
 		voterService = new VoterServiceImpl();
@@ -46,17 +62,17 @@ public class ThirdUmpireApp extends Application {
 		primaryStage.setTitle("Third Umpire");
 		GridPane grid = new GridPane();
 		initialize();
-		TableView<Voter> table = new TableView<>();
+		table = new TableView<>();
 		Scene scene = new Scene(new Group(), 730, 630);
 		
-		TextField firstNameTextField = new TextField();
+		firstNameTextField = new TextField();
 		firstNameTextField.setPromptText("First Name");
 		
 		
-		TextField middleNameTextField = new TextField();
+		middleNameTextField = new TextField();
 		middleNameTextField.setPromptText("Middle Name");
 		
-		TextField lastNameTextField = new TextField();
+		lastNameTextField = new TextField();
 		lastNameTextField.setPromptText("Last Name");
 		
 		Button searchButton = new Button("Search");
@@ -64,9 +80,9 @@ public class ThirdUmpireApp extends Application {
 		
 		ObservableList<String> districtOptions = FXCollections.observableArrayList(allDistricts);
 		districtOptions.sort(new DistrictAndAssemblyConstituencySorter());
-		ComboBox<String> districtComboBox = new ComboBox<>(districtOptions);
-		ComboBox<String> assemblyConstituencyComboBox = new ComboBox();
-		ProgressIndicator progressIndicator = new ProgressIndicator();
+		districtComboBox = new ComboBox<>(districtOptions);
+		assemblyConstituencyComboBox = new ComboBox();
+		progressIndicator = new ProgressIndicator();
 		
 		districtComboBox.setOnAction(value -> {
 			String selectedDistrict = (String)districtComboBox.getValue();
@@ -89,11 +105,11 @@ public class ThirdUmpireApp extends Application {
 		grid.setVgap(5);
 		grid.setHgap(5);
 		
-		grid.add(new Label("First Name:"), 0, 0);
+		grid.add(new Label("First Name*:"), 0, 0);
 		grid.add(firstNameTextField, 1, 0);
 		grid.add(new Label("Middle Name:"), 0, 1);
 		grid.add(middleNameTextField, 1, 1);
-		grid.add(new Label("Last Name:"), 0, 2);
+		grid.add(new Label("Last Name*:"), 0, 2);
 		grid.add(lastNameTextField, 1, 2);
 		
 		grid.add(new Label("Districts:"), 0, 3);
@@ -107,50 +123,72 @@ public class ThirdUmpireApp extends Application {
 		progressIndicator.setVisible(false);
 		
 		table.setEditable(false);
-		TableColumn fullName = new TableColumn("Full Name");
-		TableColumn dependent = new TableColumn("Dependent");
-		TableColumn dependentName = new TableColumn("Dependent Name");
-		TableColumn address = new TableColumn("Address");
-		TableColumn age = new TableColumn("Age");
-		TableColumn sex = new TableColumn("Sex");
+		fullName = new TableColumn("Full Name");
+		dependent = new TableColumn("Dependent");
+		dependentName = new TableColumn("Dependent Name");
+		address = new TableColumn("Address");
+		age = new TableColumn("Age");
+		sex = new TableColumn("Sex");
 		
-		table.getColumns().addAll(fullName, dependent, dependentName, address, age, sex);
+		table.getColumns().addAll(fullName, age, sex, dependent, dependentName, address);
 		grid.add(table, 1, 7);
 		
 		Group root = (Group)scene.getRoot();
 		root.getChildren().add(grid);
 		
 		searchButton.setOnAction(value -> {
-			progressIndicator.setVisible(true);
-			String firstName = firstNameTextField.getText();
-			String middleName = middleNameTextField.getText();
-			String lastName = lastNameTextField.getText();
-			String districtName = districtComboBox.getValue();
-			String assemblyConstituencyName = assemblyConstituencyComboBox.getValue();
-			
-			UserRequest request = new UserRequest();
-			request.setFirstName(firstName);
-			request.setMiddleName(middleName);
-			request.setLastName(lastName);
-			request.setDistrict(districtName);
-			request.setAssemblyConstituencyName(assemblyConstituencyName);
-			
-			List<Voter> voters = voterService.findVoter(request);
-			
-			ObservableList<Voter> data = FXCollections.observableArrayList(voters);
-			fullName.setCellValueFactory(new PropertyValueFactory<Voter, String>("fullName"));
-			dependent.setCellValueFactory(new PropertyValueFactory<Voter, String>("dependent"));
-			dependentName.setCellValueFactory(new PropertyValueFactory<Voter, String>("dependentName"));
-			address.setCellValueFactory(new PropertyValueFactory<Voter, String>("address"));
-			age.setCellValueFactory(new PropertyValueFactory<Voter, Integer>("age"));
-			sex.setCellValueFactory(new PropertyValueFactory<Voter, String>("sex"));
-			
-			table.setItems(data);
-			progressIndicator.setVisible(false);
+			runSearchTask();
 		});
 		
 		primaryStage.setScene(scene);
+		primaryStage.setResizable(false);
 		primaryStage.show();
+	}
+	
+	/**
+	 * 
+	 */
+	private void runSearchTask() {
+		Runnable task = () -> {
+			taskRunner();
+		};
+		Thread background = new Thread(task);
+		background.setDaemon(true);
+		background.start();
+	}
+	
+	/**
+	 * 
+	 */
+	private void taskRunner() {
+		progressIndicator.setVisible(true);
+		String firstName = firstNameTextField.getText();
+		String middleName = middleNameTextField.getText();
+		String lastName = lastNameTextField.getText();
+		String districtName = districtComboBox.getValue();
+		String assemblyConstituencyName = assemblyConstituencyComboBox.getValue();
+		
+		UserRequest request = new UserRequest();
+		request.setFirstName(firstName);
+		request.setMiddleName(middleName);
+		request.setLastName(lastName);
+		request.setDistrict(districtName);
+		request.setAssemblyConstituencyName(assemblyConstituencyName);
+		
+		List<Voter> voters = voterService.findVoter(request);
+		
+		ObservableList<Voter> data = FXCollections.observableArrayList(voters);
+		fullName.setCellValueFactory(new PropertyValueFactory<Voter, String>("fullName"));
+		dependent.setCellValueFactory(new PropertyValueFactory<Voter, String>("dependent"));
+		dependentName.setCellValueFactory(new PropertyValueFactory<Voter, String>("dependentName"));
+		address.setCellValueFactory(new PropertyValueFactory<Voter, String>("address"));
+		age.setCellValueFactory(new PropertyValueFactory<Voter, Integer>("age"));
+		sex.setCellValueFactory(new PropertyValueFactory<Voter, String>("sex"));
+		
+		Platform.runLater(() -> {
+			table.setItems(data);
+		});
+		progressIndicator.setVisible(false);
 	}
 	
 	/**
