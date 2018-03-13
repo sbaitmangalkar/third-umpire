@@ -47,7 +47,7 @@ public class ThirdUmpireApp extends Application {
 		GridPane grid = new GridPane();
 		initialize();
 		TableView<Voter> table = new TableView<>();
-		Scene scene = new Scene(new Group(), 700,600);
+		Scene scene = new Scene(new Group(), 730, 630);
 		
 		TextField firstNameTextField = new TextField();
 		firstNameTextField.setPromptText("First Name");
@@ -73,11 +73,10 @@ public class ThirdUmpireApp extends Application {
 			
 			if(selectedDistrict != null && selectedDistrict.length() > 1) {
 				ObservableList<String> assemblyConstituencyOptions = FXCollections.observableArrayList(getAllAssemblyConstituencies(selectedDistrict));
-				//ObservableList<String> assemblyConstituencyOptions = FXCollections.observableArrayList(tempGetAllAssemblyConstituencies(selectedDistrict));
+				
 				assemblyConstituencyOptions.add("All");
 				assemblyConstituencyOptions.sort(new DistrictAndAssemblyConstituencySorter());
 				
-				//assemblyConstituencyComboBox.setItems(null);
 				assemblyConstituencyComboBox.setItems(assemblyConstituencyOptions);
 				assemblyConstituencyComboBox.setVisible(true);
 				searchButton.setDisable(false);
@@ -153,7 +152,6 @@ public class ThirdUmpireApp extends Application {
 		primaryStage.setScene(scene);
 		primaryStage.show();
 	}
-	
 	
 	/**
 	 * 
