@@ -67,6 +67,12 @@ public class PersonFinder {
 	 */
 	private static List<Voter> processSearchResults(List<SearchResult> searchResults, String firstName, String lastName) {
 		List<Voter> voters = null;
+		if(searchResults == null || searchResults.size() <= 0) {
+			Voter badResult = new Voter("NA", "NA", "NA", "NA", "NA", "NA");
+			voters = new ArrayList<>();
+			voters.add(badResult);
+			return voters;
+		}
 		if(searchResults.size() > 1) {
 			voters = searchResults.stream()
 			                      .map(res -> buildVoter(res,firstName, lastName))
@@ -114,6 +120,10 @@ public class PersonFinder {
 			sexAndAge = resultPortions[4];
 			dependent = resultPortions[5];
 			dependent = dependent.substring(0, dependent.indexOf("'"));
+		} else if(resultPortions.length == 10) {
+			name = resultPortions[3];
+			sexAndAge = resultPortions[6];
+			dependent = resultPortions[7];
 		} else {
 			sexAndAge = resultPortions[3];
 			dependent = resultPortions[4];

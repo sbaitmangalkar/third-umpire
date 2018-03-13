@@ -2,6 +2,11 @@ package com.voter.info.model;
 
 import javafx.beans.property.SimpleStringProperty;
 
+/**
+ * 
+ * @author Shyam | catch.shyambaitmangalkar@gmail.com
+ *
+ */
 public class Voter {
 	private SimpleStringProperty fullName;
 	private SimpleStringProperty dependent;
