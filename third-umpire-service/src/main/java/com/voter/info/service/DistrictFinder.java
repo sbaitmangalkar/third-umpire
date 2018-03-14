@@ -72,7 +72,9 @@ public class DistrictFinder {
 			return allDistrictDetails;
 			       
 		} catch (FailingHttpStatusCodeException | IOException e) {
-			e.printStackTrace();
+			System.out.println("DistrictFinder::findAllDistricts()");
+			System.out.println(e.getMessage());
+			//e.printStackTrace();
 		} finally {
 			if(client != null) {
 				client.closeAllWindows();
