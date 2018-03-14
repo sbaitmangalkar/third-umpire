@@ -56,8 +56,14 @@ public class PollingStationFinder {
 			//pollingBoothURLs.forEach(System.out::println);
 			
 		} catch (FailingHttpStatusCodeException | IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			System.out.println("PollingStationFinder::findAllPollingStationsURL(String assemblyConstituenceURL)");
+			System.out.println(e.getMessage());
+			//e.printStackTrace();
+		} finally {
+			if(client != null) {
+				client.closeAllWindows();
+				client = null;
+			}
 		}
 		return pollingBoothURLs;
 	}
