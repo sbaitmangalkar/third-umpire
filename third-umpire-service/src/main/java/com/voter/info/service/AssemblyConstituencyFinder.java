@@ -54,7 +54,9 @@ public class AssemblyConstituencyFinder {
 			return asseblyConstituencyDetails;
 			
 		} catch (FailingHttpStatusCodeException | IOException e) {
-			e.printStackTrace();
+			System.out.println("AssemblyConstituencyFinder::findAllAssemblyConstituencies(String districtName)");
+			System.out.println(e.getMessage());
+			//e.printStackTrace();
 		}
 		return null;
 	}
