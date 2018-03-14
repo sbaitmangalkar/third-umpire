@@ -1,6 +1,5 @@
 package com.voter.info.service;
 
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -28,7 +27,7 @@ public class VoterServiceImpl implements VoterService {
 			throw new IllegalArgumentException("Please provide a valid district name for a faster search!!");
 		}
 		
-		
+		//TODO: CHange this condition check to support "All" district serach
 		if(assemblyConstituencyName != null && !assemblyConstituencyName.equals("")) {
 			voters = PersonFinder.findPerson(firstName, middleName, lastName, districtName, assemblyConstituencyName);
 		} else {

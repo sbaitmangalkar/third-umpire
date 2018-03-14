@@ -83,9 +83,11 @@ public class PDFParser {
 
 			searchResult.setResult(result);
 			searchResult.setProbableAddress(probableAddress);
-
+			reader.close();
 		} catch (IOException e) {
-			e.printStackTrace();
+			System.out.println("PDFParser::partialParse(String fileURL, String firstName, String lastName)");
+			System.out.println(e.getMessage());
+			//e.printStackTrace();
 		}
 		return searchResult;
 	}
@@ -105,7 +107,9 @@ public class PDFParser {
 			String textFromPage = strategy.getResultantText();
 			return textFromPage;
 		} catch (IOException e) {
-			e.printStackTrace();
+			System.out.println("PDFParser::extractTextFromPDFPage(PdfReader reader, int pageNumber)");
+			System.out.println(e.getMessage());
+			//e.printStackTrace();
 		}
 		return null;
 	}
