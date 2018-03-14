@@ -24,7 +24,10 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.image.Image;
 import javafx.scene.layout.GridPane;
+import javafx.scene.paint.Color;
+import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
 public class ThirdUmpireApp extends Application {
@@ -60,18 +63,24 @@ public class ThirdUmpireApp extends Application {
 	@Override
 	public void start(Stage primaryStage) throws Exception {
 		primaryStage.setTitle("Third Umpire");
+		primaryStage.getIcons().add(new Image(ThirdUmpireApp.class.getResourceAsStream("/third-umpire.jpg")));
 		GridPane grid = new GridPane();
-		initialize();
-		table = new TableView<>();
-		Scene scene = new Scene(new Group(), 730, 630);
 		
+		initialize();
+		
+		table = new TableView<>();
+		Scene scene = new Scene(new Group(), 720, 650);
+		
+		Label firstNameLabel = new Label("First Name*:");
+		firstNameLabel.setTextFill(Color.FIREBRICK);
 		firstNameTextField = new TextField();
 		firstNameTextField.setPromptText("First Name");
-		
 		
 		middleNameTextField = new TextField();
 		middleNameTextField.setPromptText("Middle Name");
 		
+		Label lastNameLabel = new Label("Last Name*:");
+		lastNameLabel.setTextFill(Color.FIREBRICK);
 		lastNameTextField = new TextField();
 		lastNameTextField.setPromptText("Last Name");
 		
@@ -105,11 +114,11 @@ public class ThirdUmpireApp extends Application {
 		grid.setVgap(5);
 		grid.setHgap(5);
 		
-		grid.add(new Label("First Name*:"), 0, 0);
+		grid.add(firstNameLabel, 0, 0);
 		grid.add(firstNameTextField, 1, 0);
 		grid.add(new Label("Middle Name:"), 0, 1);
 		grid.add(middleNameTextField, 1, 1);
-		grid.add(new Label("Last Name*:"), 0, 2);
+		grid.add(lastNameLabel, 0, 2);
 		grid.add(lastNameTextField, 1, 2);
 		
 		grid.add(new Label("Districts:"), 0, 3);
@@ -132,6 +141,11 @@ public class ThirdUmpireApp extends Application {
 		
 		table.getColumns().addAll(fullName, age, sex, dependent, dependentName, address);
 		grid.add(table, 1, 7);
+		
+		Text mandatoryFieldsText = new Text("* Mandatory Fields");
+		mandatoryFieldsText.setFill(Color.FIREBRICK);
+		
+		grid.add(mandatoryFieldsText, 0, 8);
 		
 		Group root = (Group)scene.getRoot();
 		root.getChildren().add(grid);
