@@ -8,8 +8,15 @@ import java.util.stream.Stream;
 import com.voter.info.model.SearchResult;
 import com.voter.info.model.Voter;
 
+/**
+ * Finds for a given person in a given region
+ * 
+ * @author Shyam | catch.shyambaitmangalkar@gmail.com
+ *
+ */
 public class PersonFinder {
 	/**
+	 * Finds a person in given district in all of it's assembly constituencies.
 	 * 
 	 * @param firstName
 	 * @param middleName
@@ -18,7 +25,6 @@ public class PersonFinder {
 	 * @return
 	 */
 	public static List<Voter> findPerson(String firstName, String middleName, String lastName, String districtName) {
-		//TODO: Implement findPerson(String name) method
 		List<String> allPollingStationsInDistrict  = AssemblyConstituencyFinder.findAllAssemblyConstituencies(districtName)
 		                                                              .entrySet()
 		                                                              .parallelStream()
@@ -40,7 +46,8 @@ public class PersonFinder {
 	}
 	
 	/**
-	 * 
+	 * Finds a given person in a given district and given assembly constituency.
+	 *  
 	 * @param firstName
 	 * @param middleName
 	 * @param lastName
@@ -61,6 +68,8 @@ public class PersonFinder {
 	}
 	
 	/**
+	 * Processes the given <code>SearchResult</code> to 
+	 * form a proper <code>Voter</code>
 	 * 
 	 * @param searchResults
 	 * @return
@@ -86,6 +95,7 @@ public class PersonFinder {
 	}
 	
 	/**
+	 * Given a <code>SearchResult</code> and name, <code>builVoter</code> builds the actual <code>Voter</code>
 	 * 
 	 * @param searchResult
 	 * @return
@@ -138,6 +148,17 @@ public class PersonFinder {
 		return voter;
 	}
 	
+	/**
+	 * If there are multiple search hits in cases like, a person is himself is a father or a 
+	 * husband and there are people who are dependent on him and appear on the same page in voter list, 
+	 * <code>filterRequiredVoter</code> will fetch out the correct
+	 * <code>String</code> that contains required details.
+	 * 
+	 * @param result
+	 * @param firstName
+	 * @param lastName
+	 * @return
+	 */
 	private static String filterRequiredVoter(String result, String firstName, String lastName) {
 		String[] multipersonel = result.split("\\|");
 		String res = Stream.of(multipersonel)

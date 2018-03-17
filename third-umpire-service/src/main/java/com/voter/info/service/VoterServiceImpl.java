@@ -8,6 +8,7 @@ import com.voter.info.model.UserRequest;
 import com.voter.info.model.Voter;
 
 /**
+ * Service layer implementation
  * 
  * @author Shyam | catch.shyambaitmangalkar@gmail.com
  *
@@ -27,7 +28,7 @@ public class VoterServiceImpl implements VoterService {
 			throw new IllegalArgumentException("Please provide a valid district name for a faster search!!");
 		}
 		
-		//TODO: CHange this condition check to support "All" district serach
+		//TODO: Change this condition check to support "All" district search
 		if(assemblyConstituencyName != null && !assemblyConstituencyName.equals("")) {
 			voters = PersonFinder.findPerson(firstName, middleName, lastName, districtName, assemblyConstituencyName);
 		} else {
@@ -56,12 +57,6 @@ public class VoterServiceImpl implements VoterService {
 
 	@Override
 	public Map<String, List<String>> getDistrictsWithAssemblyConstituencies() {
-		/*Map<String, List<String>> builder = new HashMap<>();
-		
-		Map<String, String> m = DistrictFinder.findAllDistricts();
-		for(Map.Entry<String, String> entry : m.entrySet()) {
-			builder.put(entry.getKey(), getAllAssemblyConstituencies(entry.getKey()));
-		}*/
 		
 		return DistrictFinder.getAllDistrictDetails()
 		                     .entrySet()

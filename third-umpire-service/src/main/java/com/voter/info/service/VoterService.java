@@ -7,6 +7,7 @@ import com.voter.info.model.UserRequest;
 import com.voter.info.model.Voter;
 
 /**
+ * Service layer interface
  * 
  * @author Shyam | catch.shyambaitmangalkar@gmail.com
  *

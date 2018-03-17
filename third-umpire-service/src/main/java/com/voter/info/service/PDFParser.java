@@ -17,6 +17,7 @@ import com.voter.info.model.SearchResult;
 import com.voter.info.util.MemoryManager;
 
 /**
+ * Parses a given URL that contains a PDF file.
  * 
  * @author Shyam | catch.shyambaitmangalkar@gmail.com
  *
@@ -44,6 +45,8 @@ public class PDFParser {
 	}
 
 	/**
+	 * Returns a <code>SearchResult</code> after parsing a 
+	 * PDF file present in the given URL and searching for a given name.
 	 * 
 	 * @param fileURL
 	 * @param firstName
@@ -62,10 +65,7 @@ public class PDFParser {
 			String probableAddress = text.split("\\n")[0];
 
 			
-			 /*text = text.replaceAll("[ ]{2,}", " "); text = text.replaceAll("Name:", "");
-			 text = text.replaceAll("Photo", ""); text = text.replaceAll("Not \\n", "");
-			 text = text.replaceAll("Available", ""); text =
-			 text.replaceAll("(?m)^[ \\t]*\\r?\\n", "");*/
+			//text = text.replaceAll("(?m)^[ \\t]*\\r?\\n", "");
 			 
 
 			// System.out.println(text);
@@ -93,6 +93,7 @@ public class PDFParser {
 	}
 
 	/**
+	 * Extracts required text from a PDF page.
 	 * 
 	 * @param reader
 	 * @param pageNumber
@@ -112,18 +113,6 @@ public class PDFParser {
 			//e.printStackTrace();
 		}
 		return null;
-	}
-
-	public static void main(String[] args) {
-		String name = "";
-		
-		String firstName = name.split("\\s")[0];
-		String lastName = name.split("\\s")[1];
-		SearchResult res = partialParse(
-				"http://ceokarnataka.kar.nic.in/DraftRolls_2016/DraftRolls_2016/English/WOIMG/AC156/AC1560162.pdf",
-				firstName, lastName);
-		System.out.println(res);
-
 	}
 
 }

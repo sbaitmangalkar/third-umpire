@@ -1,6 +1,7 @@
 package com.voter.info.service;
 
 /**
+ * Service layer constants.
  * 
  * @author Shyam | catch.shyambaitmangalkar@gmail.com
  *

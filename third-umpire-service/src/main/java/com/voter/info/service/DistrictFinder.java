@@ -14,6 +14,7 @@ import com.gargoylesoftware.htmlunit.html.HtmlAnchor;
 import com.gargoylesoftware.htmlunit.html.HtmlPage;
 
 /**
+ * Finds districts and their specific URLs
  * 
  * @author Shyam | catch.shyambaitmangalkar@gmail.com
  *
@@ -33,10 +34,11 @@ public class DistrictFinder {
 	}
 	
 	/**
+	 * Builds <code>allDistrictDetails</code> when called.
 	 * 
 	 * @return
 	 */
-	public static Map<String, String> findAllDistricts() {
+	private static Map<String, String> findAllDistricts() {
 		WebClient client = new WebClient();
 		
 		client.getOptions().setThrowExceptionOnFailingStatusCode(false);
@@ -65,9 +67,9 @@ public class DistrictFinder {
 			Map<String, String> bangaloreDistrictURLs = getDistrictURLsForBangalore(bangaloreDistrictsAnchor);
 			
 			
-			allDistrictDetails = Stream.of(districtURLs, bangaloreDistrictURLs)
-					                   .flatMap(map -> map.entrySet().stream())
-					                   .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
+			Map<String, String> allDistrictDetails = Stream.of(districtURLs, bangaloreDistrictURLs)
+					                                       .flatMap(map -> map.entrySet().stream())
+					                                       .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
 			
 			return allDistrictDetails;
 			       
@@ -85,6 +87,7 @@ public class DistrictFinder {
 	}
 	
 	/**
+	 * Returns URL of a given district.
 	 * 
 	 * @param districtName
 	 * @return
@@ -99,6 +102,12 @@ public class DistrictFinder {
 			return null;
 	}
 	
+	/**
+	 * Returns a <code>Map<String, String></code> containing
+	 * all the districts and their URLs.
+	 * 
+	 * @return
+	 */
 	public static Map<String, String> getAllDistrictDetails() {
 		if(allDistrictDetails == null)
 			allDistrictDetails = findAllDistricts();
@@ -106,6 +115,8 @@ public class DistrictFinder {
 	}
 	
 	/**
+	 * Returns a <code>Map<String, String></code> containing district 
+	 * names and URLs specific to Bangalore.
 	 * 
 	 * @param anchor
 	 * @return
@@ -145,6 +156,9 @@ public class DistrictFinder {
 	}
 	
 	/**
+	 * District names are listed in both Kannada and English languages.
+	 * This method filters out the Kannada names and keeps their 
+	 * English counterparts.
 	 * 
 	 * @param districtName
 	 * @return
@@ -158,10 +172,5 @@ public class DistrictFinder {
 			districtName = districtName.substring(districtName.indexOf("/") + 2, districtName.length());
 		}
 		return districtName;
-	}
-	
-	public static void main(String[] args) {
-		System.out.println(findAllDistricts());
-		System.out.println(getURLForDistrict("B.B.M.P(NORTH)"));
 	}
 }
