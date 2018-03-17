@@ -3,6 +3,8 @@ package com.voter.info.model;
 import javafx.beans.property.SimpleStringProperty;
 
 /**
+ * Represents a response that would be given back at
+ * the end of searching operation.
  * 
  * @author Shyam | catch.shyambaitmangalkar@gmail.com
  *

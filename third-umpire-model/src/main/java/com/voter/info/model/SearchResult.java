@@ -1,5 +1,12 @@
 package com.voter.info.model;
 
+/**
+ * Represents a partial result obtained from parsing
+ * an assembly constituency's polling station.
+ * 
+ * @author Shyam | catch.shyambaitmangalkar@gmail.com
+ *
+ */
 public class SearchResult {
 	private String result;
 	private String probableAddress;
