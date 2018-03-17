@@ -13,6 +13,12 @@ import com.gargoylesoftware.htmlunit.WebClient;
 import com.gargoylesoftware.htmlunit.html.HtmlAnchor;
 import com.gargoylesoftware.htmlunit.html.HtmlPage;
 
+/**
+ * Finds all polling stations falling under a particular assembly constituency.
+ * 
+ * @author Shyam | catch.shyambaitmangalkar@gmail.com
+ *
+ */
 public class PollingStationFinder {
 	private static Properties getProperties() {
 		Properties properties = new Properties();
@@ -25,6 +31,13 @@ public class PollingStationFinder {
 		return properties;
 	}
 	
+	/**
+	 * Given an assembly constituency URL, finds all of the 
+	 * polling station falling under that assembly constituency.
+	 * 
+	 * @param assemblyConstituenceURL
+	 * @return
+	 */
 	public static List<String> findAllPollingStationsURL(String assemblyConstituenceURL) {
 		List<String> pollingBoothURLs = null;
 		WebClient client = new WebClient();
@@ -66,10 +79,5 @@ public class PollingStationFinder {
 			}
 		}
 		return pollingBoothURLs;
-	}
-	
-	public static void main(String[] args) {
-		//System.out.println(findAllPollingStationsURL("http://ceokarnataka.kar.nic.in/DraftRolls_2016/Part_List.aspx?ACNO=156"));
-		System.out.println(findAllPollingStationsURL("http://ceokarnataka.kar.nic.in/FinalRoll-2017/Part_List.aspx?ACNO=156"));
 	}
 }

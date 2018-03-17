@@ -6,6 +6,6 @@ public class DistrictFinderTest {
 	
 	@Test
 	public void testFindAllDistricts() {
-		System.out.println(DistrictFinder.findAllDistricts());
+		System.out.println(DistrictFinder.getAllDistrictDetails());
 	}
 }

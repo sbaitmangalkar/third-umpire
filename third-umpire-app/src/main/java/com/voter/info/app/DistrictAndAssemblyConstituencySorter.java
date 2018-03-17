@@ -3,8 +3,10 @@ package com.voter.info.app;
 import java.util.Comparator;
 
 /**
+ * A <code>Comparator<T></code> which is used to sort either
+ * district names or assembly constituency names.
  * 
- * @author Shyam | @sbaitmangalkar| catch.shyambaitmangalkar@gmail.com
+ * @author Shyam | @sbaitmangalkar | catch.shyambaitmangalkar@gmail.com
  *
  */
 public class DistrictAndAssemblyConstituencySorter implements Comparator<String> {

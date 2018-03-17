@@ -1,5 +1,11 @@
 package com.voter.info.model;
 
+/**
+ * Represents a request coming back from the UI.
+ * 
+ * @author Shyam | catch.shyambaitmangalkar@gmail.com
+ *
+ */
 public class UserRequest {
 	private String firstName;
 	private String middleName;

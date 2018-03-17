@@ -29,6 +29,8 @@ public class AssemblyConstituencyFinder {
 	}
 
 	/**
+	 * Returns a <code> Map<String, String></code> containing all the
+	 * assembly constituency names and their URLs for a given district.
 	 * 
 	 * @param districtURL
 	 */
@@ -57,11 +59,17 @@ public class AssemblyConstituencyFinder {
 			System.out.println("AssemblyConstituencyFinder::findAllAssemblyConstituencies(String districtName)");
 			System.out.println(e.getMessage());
 			//e.printStackTrace();
+		} finally {
+			if(client != null) {
+				client.closeAllWindows();
+				client = null;
+			}
 		}
 		return null;
 	}
 	
 	/**
+	 * Returns URL for a given district and assembly constituency.
 	 * 
 	 * @param districtURL
 	 * @param assemblyConstituencyName
@@ -76,6 +84,10 @@ public class AssemblyConstituencyFinder {
 	}
 	
 	/**
+	 * Each assembly constituency has names listed in both 
+	 * Kannada and English languages. This method keeps the
+	 * English names and removes the Kannada counterparts since,
+	 * the parser will not parse Kannada language.
 	 * 
 	 * @param assemblyConstName
 	 * @return

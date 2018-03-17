@@ -30,6 +30,12 @@ import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
+/**
+ * JavaFx UI app
+ * 
+ * @author Shyam | catch.shyambaitmangalkar@gmail.com
+ *
+ */
 public class ThirdUmpireApp extends Application {
 	private VoterService voterService;
 	private List<String> allDistricts;
@@ -50,6 +56,10 @@ public class ThirdUmpireApp extends Application {
 	private TableColumn<Voter, Integer> age;
 	private TableColumn<Voter, String> sex;
 	
+	/**
+	 * Initializes and builds the required data structures which will
+	 * be used during UI population.
+	 */
 	private void initialize() {
 		voterService = new VoterServiceImpl();
 		districtsWithAssemblyConstituencies = voterService.getDistrictsWithAssemblyConstituencies();
@@ -62,7 +72,7 @@ public class ThirdUmpireApp extends Application {
 	@SuppressWarnings({ "unchecked", "rawtypes" })
 	@Override
 	public void start(Stage primaryStage) throws Exception {
-		primaryStage.setTitle("Third Umpire");
+		primaryStage.setTitle("Third Umpire v1.0");
 		primaryStage.getIcons().add(new Image(ThirdUmpireApp.class.getResourceAsStream("/third-umpire.jpg")));
 		GridPane grid = new GridPane();
 		
@@ -160,7 +170,12 @@ public class ThirdUmpireApp extends Application {
 	}
 	
 	/**
+	 * When UI and data operations are performed on the same thread,
+	 * JavaFx UI will enter a not-responding state since a single thread is 
+	 * throttled to perform multiple parallel task.
 	 * 
+	 * Hence, <code>runSearchTask</code> will spin up a new background thread
+	 * and performs all data operations on that thread, keeping UI thread intact. 
 	 */
 	private void runSearchTask() {
 		Runnable task = () -> {
@@ -172,7 +187,7 @@ public class ThirdUmpireApp extends Application {
 	}
 	
 	/**
-	 * 
+	 * Runs an individual task
 	 */
 	private void taskRunner() {
 		progressIndicator.setVisible(true);
@@ -206,6 +221,7 @@ public class ThirdUmpireApp extends Application {
 	}
 	
 	/**
+	 * Returns all assembly constituencies of a given district.
 	 * 
 	 * @param districtName
 	 * @return
