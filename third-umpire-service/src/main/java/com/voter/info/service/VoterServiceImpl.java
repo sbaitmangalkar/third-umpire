@@ -29,7 +29,7 @@ public class VoterServiceImpl implements VoterService {
 		}
 		
 		//TODO: Change this condition check to support "All" district search
-		if(assemblyConstituencyName != null && !assemblyConstituencyName.equals("")) {
+		if(assemblyConstituencyName != null && !assemblyConstituencyName.equals("") && !assemblyConstituencyName.equals("All")) {
 			voters = PersonFinder.findPerson(firstName, middleName, lastName, districtName, assemblyConstituencyName);
 		} else {
 			voters = PersonFinder.findPerson(firstName, middleName, lastName, districtName);
