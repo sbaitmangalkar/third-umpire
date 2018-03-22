@@ -16,3 +16,6 @@ $ java ThirdUmpireApp.java
 C:/>java ThirdUmpireApp.java
 ```
 **Note:** You can either navigate to the directory containing ThirdUmpireApp.java and then run it or you can mention the path to ThirdUmpireApp.java while running it.
+
+## Limitations
+This application is capable of searching through voter lists which are in English. There are some assembly constituencies in the backend whose details are available only in Kannada (local regional language). In such cases, the application will not parse the content and in turn, there will be no search results available.
