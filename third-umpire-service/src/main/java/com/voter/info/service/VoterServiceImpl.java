@@ -28,7 +28,6 @@ public class VoterServiceImpl implements VoterService {
 			throw new IllegalArgumentException("Please provide a valid district name for a faster search!!");
 		}
 		
-		//TODO: Change this condition check to support "All" district search
 		if(assemblyConstituencyName != null && !assemblyConstituencyName.equals("") && !assemblyConstituencyName.equals("All")) {
 			voters = PersonFinder.findPerson(firstName, middleName, lastName, districtName, assemblyConstituencyName);
 		} else {
