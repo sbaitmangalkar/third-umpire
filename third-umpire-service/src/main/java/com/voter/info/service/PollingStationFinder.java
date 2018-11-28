@@ -47,8 +47,8 @@ public class PollingStationFinder {
 		client.getOptions().setJavaScriptEnabled(true);
 		client.waitForBackgroundJavaScript(1000);
 		
-		//String draftRollURL = getProperties().getProperty("DRAFT_ROLL_URL").replace("%d", ServiceConstants.HISTORY_SEARCH_YEAR);
-		String draftRollURL = getProperties().getProperty("FINAL_ROLL_URL").replace("%d", ServiceConstants.RECENT_SEARCH_YEAR);
+		String draftRollURL = getProperties().getProperty("DRAFT_ROLL_URL").replace("%d", ServiceConstants.RECENT_SEARCH_YEAR);
+		//String draftRollURL = getProperties().getProperty("FINAL_ROLL_URL").replace("%d", ServiceConstants.RECENT_SEARCH_YEAR);
 		
 		try {
 			HtmlPage pollingStationPage = client.getPage(assemblyConstituenceURL);

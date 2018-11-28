@@ -18,8 +18,8 @@ public class PersonFinderTest {
 
 	@Before
 	public void init() {
-		firstName = "Kishan";
-		lastName = "Kumar";
+		firstName = "Anusha";
+		lastName = "Malagi";
 		districtName = "B.B.M.P(NORTH)";
 		assemblyConstituencyName = "Mahalakshmi Layout";
 	}
