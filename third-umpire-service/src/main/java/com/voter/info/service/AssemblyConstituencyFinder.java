@@ -32,7 +32,7 @@ public class AssemblyConstituencyFinder {
 	 * Returns a <code> Map<String, String></code> containing all the
 	 * assembly constituency names and their URLs for a given district.
 	 * 
-	 * @param districtURL
+	 * @param districtName
 	 */
 	public static Map<String, String> findAllAssemblyConstituencies(String districtName) {
 		WebClient client = new WebClient();
@@ -41,8 +41,8 @@ public class AssemblyConstituencyFinder {
 		client.getOptions().setCssEnabled(false);
 		client.getOptions().setJavaScriptEnabled(true);
 		client.waitForBackgroundJavaScript(1000);
-		//String draftRollURL = getProperties().getProperty("DRAFT_ROLL_URL").replace("%d", ServiceConstants.HISTORY_SEARCH_YEAR);
-		String draftRollURL = getProperties().getProperty("FINAL_ROLL_URL").replace("%d", ServiceConstants.RECENT_SEARCH_YEAR);
+		String draftRollURL = getProperties().getProperty("DRAFT_ROLL_URL").replace("%d", ServiceConstants.RECENT_SEARCH_YEAR);
+		//String draftRollURL = getProperties().getProperty("FINAL_ROLL_URL").replace("%d", ServiceConstants.RECENT_SEARCH_YEAR);
 		
 		try {
 			String districtURL = DistrictFinder.getURLForDistrict(districtName);
@@ -71,7 +71,7 @@ public class AssemblyConstituencyFinder {
 	/**
 	 * Returns URL for a given district and assembly constituency.
 	 * 
-	 * @param districtURL
+	 * @param districtName
 	 * @param assemblyConstituencyName
 	 * @return
 	 */

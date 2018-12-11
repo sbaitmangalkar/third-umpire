@@ -47,25 +47,18 @@ public class PollingStationFinder {
 		client.getOptions().setJavaScriptEnabled(true);
 		client.waitForBackgroundJavaScript(1000);
 		
-		//String draftRollURL = getProperties().getProperty("DRAFT_ROLL_URL").replace("%d", ServiceConstants.HISTORY_SEARCH_YEAR);
-		String draftRollURL = getProperties().getProperty("FINAL_ROLL_URL").replace("%d", ServiceConstants.RECENT_SEARCH_YEAR);
+		String draftRollURL = getProperties().getProperty("DRAFT_ROLL_URL").replace("%d", ServiceConstants.RECENT_SEARCH_YEAR);
+		//String draftRollURL = getProperties().getProperty("FINAL_ROLL_URL").replace("%d", ServiceConstants.RECENT_SEARCH_YEAR);
 		
 		try {
 			HtmlPage pollingStationPage = client.getPage(assemblyConstituenceURL);
 			List<HtmlAnchor> allPageAnchors = pollingStationPage.getAnchors();
-			if(draftRollURL.contains("_2016")) {
-				pollingBoothURLs = allPageAnchors.stream()
-                                                 .filter(eachAnchor -> eachAnchor.getHrefAttribute().contains("English"))
-                                                 .map(eachAnchor -> draftRollURL + "/" + eachAnchor.getHrefAttribute())
-                                                 .collect(Collectors.toList());
-			} else {
-				pollingBoothURLs = allPageAnchors.stream()
-                                                 .filter(eachAnchor -> eachAnchor.getHrefAttribute().contains("English"))
-                                                 .map(eachAnchor -> eachAnchor.getHrefAttribute().replace("%2f", "/"))
-                                                 .map(eachAnchor -> StringUtils.substringAfter(eachAnchor, "=."))
-                                                 .map(eachAnchor -> draftRollURL + eachAnchor)
-                                                 .collect(Collectors.toList());
-			}
+
+			pollingBoothURLs = allPageAnchors.stream()
+				.filter(eachAnchor -> eachAnchor.getHrefAttribute().contains("English"))
+				.map(eachAnchor -> StringUtils.substringAfter(eachAnchor.getHrefAttribute(), "."))
+				.map(eachAnchor -> draftRollURL + eachAnchor)
+				.collect(Collectors.toList());
 			//pollingBoothURLs.forEach(System.out::println);
 			
 		} catch (FailingHttpStatusCodeException | IOException e) {

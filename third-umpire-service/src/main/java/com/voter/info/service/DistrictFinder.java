@@ -47,8 +47,8 @@ public class DistrictFinder {
 		client.waitForBackgroundJavaScript(1000);
 		
 		try {
-			//String draftRollURL = getProperties().getProperty("DRAFT_ROLL_URL").replace("%d", ServiceConstants.HISTORY_SEARCH_YEAR);
-			String draftRollURL = getProperties().getProperty("FINAL_ROLL_URL").replace("%d", ServiceConstants.RECENT_SEARCH_YEAR);
+			String draftRollURL = getProperties().getProperty("DRAFT_ROLL_URL").replace("%d", ServiceConstants.RECENT_SEARCH_YEAR);
+			//String draftRollURL = getProperties().getProperty("FINAL_ROLL_URL").replace("%d", ServiceConstants.RECENT_SEARCH_YEAR);
 			HtmlPage draftRollPage = client.getPage(draftRollURL);
 			List<HtmlAnchor> anchors = draftRollPage.getAnchors();
 			
@@ -130,8 +130,8 @@ public class DistrictFinder {
 		client.waitForBackgroundJavaScript(1000);
 		
 		String bangaloreDistrictURL = anchor.getHrefAttribute();
-		//String baseURL = getProperties().getProperty("DRAFT_ROLL_URL").replace("%d", ServiceConstants.HISTORY_SEARCH_YEAR);
-		String baseURL = getProperties().getProperty("FINAL_ROLL_URL").replace("%d", ServiceConstants.RECENT_SEARCH_YEAR);;
+		String baseURL = getProperties().getProperty("DRAFT_ROLL_URL").replace("%d", ServiceConstants.RECENT_SEARCH_YEAR);
+		//String baseURL = getProperties().getProperty("FINAL_ROLL_URL").replace("%d", ServiceConstants.RECENT_SEARCH_YEAR);;
 		String draftRollURL = baseURL;
 		baseURL = baseURL + "/" + bangaloreDistrictURL;
 		
