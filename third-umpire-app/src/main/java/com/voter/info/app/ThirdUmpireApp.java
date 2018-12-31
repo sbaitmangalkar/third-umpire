@@ -79,7 +79,7 @@ public class ThirdUmpireApp extends Application {
 		initialize();
 		
 		table = new TableView<>();
-		Scene scene = new Scene(new Group(), 720, 650);
+		Scene scene = new Scene(new Group(), 750, 680);
 		
 		Label firstNameLabel = new Label("First Name*:");
 		firstNameLabel.setTextFill(Color.FIREBRICK);
