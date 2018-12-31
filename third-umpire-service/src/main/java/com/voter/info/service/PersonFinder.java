@@ -96,7 +96,7 @@ public class PersonFinder {
     }
 
     /**
-     * Given a <code>SearchResult</code> and name, <code>builVoter</code> builds the actual <code>Voter</code>
+     * Given a <code>SearchResult</code> and name, <code>buildVoter</code> builds the actual <code>Voter</code>
      *
      * @param searchResult
      * @return
