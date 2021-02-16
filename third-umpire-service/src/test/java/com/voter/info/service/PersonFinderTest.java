@@ -18,10 +18,10 @@ public class PersonFinderTest {
 
 	@Before
 	public void init() {
-		firstName = "Anusha";
-		lastName = "Malagi";
-		districtName = "B.B.M.P(NORTH)";
-		assemblyConstituencyName = "Mahalakshmi Layout";
+		firstName = "Shyam";
+		lastName = "Baitmangalkar";
+		districtName = "Dharwad";
+		assemblyConstituencyName = "Hubli-Dharwad-Central";
 	}
 
 	@Test
